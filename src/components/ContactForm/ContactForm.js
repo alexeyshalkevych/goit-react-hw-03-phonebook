@@ -10,6 +10,7 @@ export default class ContactForm extends Component {
   state = {
     name: '',
     number: '',
+    disabled: false,
   };
 
   handleChange = e => {
@@ -23,7 +24,15 @@ export default class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onAddContact({ ...this.state });
+    const { name, number } = this.state;
+
+    this.setState({ disabled: true });
+
+    setTimeout(() => {
+      this.props.onAddContact({ name, number });
+
+      this.setState({ disabled: false });
+    }, 500);
 
     this.resetForm();
   };
@@ -36,7 +45,7 @@ export default class ContactForm extends Component {
   }
 
   render() {
-    const { name, number } = this.state;
+    const { name, number, disabled } = this.state;
 
     return (
       <FormContainer onSubmit={this.handleSubmit}>
@@ -60,7 +69,9 @@ export default class ContactForm extends Component {
             autoComplete="off"
           />
         </Label>
-        <Button type="submit">Add contact</Button>
+        <Button type="submit" disabled={disabled}>
+          Add contact
+        </Button>
       </FormContainer>
     );
   }
