@@ -53,7 +53,8 @@
           "rendering": ["/^render.+$/", "render"]
         }
       }
-    ]
+    ],
+    "no-shadow": 0
   },
   "globals": {
     "window": true,

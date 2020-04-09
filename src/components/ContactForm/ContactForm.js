@@ -1,78 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormContainer, Label, InputField, Button } from './ContactForm.styled';
 
-export default class ContactForm extends Component {
-  static propTypes = {
-    onAddContact: PropTypes.func.isRequired,
+const ContactForm = ({ onAddContact }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const resetForm = () => {
+    setName('');
+    setNumber('');
   };
 
-  state = {
-    name: '',
-    number: '',
-    disabled: false,
-  };
-
-  handleChange = e => {
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    const { name, number } = this.state;
+    onAddContact({ name, number });
 
-    this.setState({ disabled: true });
-
-    setTimeout(() => {
-      this.props.onAddContact({ name, number });
-
-      this.setState({ disabled: false });
-    }, 500);
-
-    this.resetForm();
+    resetForm();
   };
 
-  resetForm() {
-    this.setState({
-      name: '',
-      number: '',
-    });
-  }
+  return (
+    <FormContainer onSubmit={handleSubmit}>
+      <Label>
+        Name
+        <InputField
+          type="text"
+          name="name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          autoComplete="off"
+        />
+      </Label>
+      <Label>
+        Number
+        <InputField
+          type="text"
+          name="number"
+          value={number}
+          onChange={e => setNumber(e.target.value)}
+          autoComplete="off"
+        />
+      </Label>
+      <Button type="submit">Add contact</Button>
+    </FormContainer>
+  );
+};
 
-  render() {
-    const { name, number, disabled } = this.state;
+ContactForm.propTypes = {
+  onAddContact: PropTypes.func.isRequired,
+};
 
-    return (
-      <FormContainer onSubmit={this.handleSubmit}>
-        <Label>
-          Name
-          <InputField
-            type="text"
-            name="name"
-            value={name}
-            onChange={this.handleChange}
-            autoComplete="off"
-          />
-        </Label>
-        <Label>
-          Number
-          <InputField
-            type="text"
-            name="number"
-            value={number}
-            onChange={this.handleChange}
-            autoComplete="off"
-          />
-        </Label>
-        <Button type="submit" disabled={disabled}>
-          Add contact
-        </Button>
-      </FormContainer>
-    );
-  }
-}
+export default ContactForm;
