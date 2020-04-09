@@ -8,7 +8,10 @@ const ContactList = ({ items, onDeleteContact }) =>
     <List>
       {items.map(item => (
         <ListItem key={item.id}>
-          <Contact {...item} onDeleteContact={() => onDeleteContact(item.id)} />
+          <Contact
+            item={item}
+            onDeleteContact={() => onDeleteContact(item.id)}
+          />
         </ListItem>
       ))}
     </List>

@@ -1,3 +1,11 @@
+const filterContacts = (contacts, filter) =>
+  contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase()),
+  );
+
+const findContact = (contacts, contact) =>
+  contacts.find(item => item.name === contact.name);
+
 const save = (key, value) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -16,4 +24,4 @@ const get = key => {
   }
 };
 
-export { save, get };
+export { filterContacts, findContact, save, get };

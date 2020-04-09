@@ -4,9 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import ContactFilter from '../ContactFilter/ContactFilter';
-import filterContacts from '../../utils/filterContacs';
-import findContact from '../../utils/findContact';
-import { get, save } from '../../utils/localeStorageReusable';
+import { filterContacts, findContact, get, save } from '../../utils/helpers';
 import {
   PhonebookContainer,
   PhonebookTitle,
